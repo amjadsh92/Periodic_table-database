@@ -15,6 +15,10 @@ COLUMN=name
 fi
 
 NAME=$($PSQL "SELECT name FROM elements INNER JOIN properties USING(atomic_number) INNER JOIN types USING(type_id) WHERE $COLUMN=$2;")
+if [[ -z $NAME ]]
+then
+echo "I could not find that element in the database."
+else
 SYMBOL=$($PSQL "SELECT symbol FROM elements INNER JOIN properties USING(atomic_number) INNER JOIN types USING(type_id) WHERE $COLUMN=$2;")
 ATOMIC_NUMBER=$($PSQL "SELECT atomic_number FROM elements INNER JOIN properties USING(atomic_number) INNER JOIN types USING(type_id) WHERE $COLUMN=$2;")
 TYPE=$($PSQL "SELECT type FROM elements INNER JOIN properties USING(atomic_number) INNER JOIN types USING(type_id) WHERE $COLUMN=$2;")
@@ -22,10 +26,10 @@ ATOMIC_MASS=$($PSQL "SELECT atomic_mass FROM elements INNER JOIN properties USIN
 MELTING_POINT_CELSIUS=$($PSQL "SELECT melting_point_celsius FROM elements INNER JOIN properties USING(atomic_number) INNER JOIN types USING(type_id) WHERE $COLUMN=$2;")
 BOILING_POINT_CELSIUS=$($PSQL "SELECT boiling_point_celsius FROM elements INNER JOIN properties USING(atomic_number) INNER JOIN types USING(type_id) WHERE $COLUMN=$2;")
 echo "The element with atomic number $ATOMIC_NUMBER is $NAME ($SYMBOL). It's a $TYPE, with a mass of $ATOMIC_MASS amu. $NAME has a melting point of $MELTING_POINT_CELSIUS celsius and a boiling point of $BOILING_POINT_CELSIUS celsius."
-
+fi
 } 
 
- 
+
 if [[ -z $1 ]]
 then
 echo "Please provide an element as an argument."

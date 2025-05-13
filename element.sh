@@ -35,6 +35,9 @@ ELEMENT_FINDER "Number" $1
 elif [[ $1 =~ ^[A-Z][a-z]?$ ]]
 then
 ELEMENT_FINDER "Symbol" "'$1'"
+elif [[ $1 =~ ^[a-zA-Z]{3,}$ ]]
+then
+ELEMENT_FINDER "Name" "'$1'"
 fi
 
 

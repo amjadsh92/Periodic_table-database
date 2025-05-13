@@ -32,6 +32,9 @@ echo "Please provide an element as an argument."
 elif [[ $1 =~ ^[0-9]+$ ]]
 then
 ELEMENT_FINDER "Number" $1
+elif [[ $1 =~ ^[A-Z][a-z]?$ ]]
+then
+ELEMENT_FINDER "Symbol" "'$1'"
 fi
 
 
